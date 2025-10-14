@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: upload
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  config:
+    import: optional:file:.env[.properties]
+  servlet:
+    multipart:
+      enabled: true
+
+gcp:
+  project-id: ${GCP_PROJECTID}
+  location: ${GCP_LOCATION}
+  pancard-processor-id: ${GCP_PAN_PID}
+  salarySlip-processor-id: ${GCP_SAL_PID}
+
+server:
+  port: ${PORT:8080}  # Use Render's PORT env var if available, default to 8080
