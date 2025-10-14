@@ -11,7 +11,7 @@ FROM openjdk:17.0.1-jdk-slim
 WORKDIR /app
 
 # Copy the built jar from the build stage
-COPY --from=build /app/target/loanCraftBackend-0.0.1-SNAPSHOT.jar loanCraftBackend.jar
+COPY --from=build /app/target/upload-0.0.1-SNAPSHOT.jar upload.jar
 
 # Create a directory where we'll mount the Google credentials file at runtime
 RUN mkdir -p /etc/secrets
@@ -24,4 +24,4 @@ ENV GOOGLE_APPLICATION_CREDENTIALS=/etc/secrets/google-credentials.json
 EXPOSE 8080
 
 # Start the application
-ENTRYPOINT ["java", "-jar", "loanCraftBackend.jar"]
+ENTRYPOINT ["java", "-jar", "upload.jar"]
