@@ -22,3 +22,6 @@ gcp:
   location: ${GCP_LOCATION}
   pancard-processor-id: ${GCP_PAN_PID}
   salarySlip-processor-id: ${GCP_SAL_PID}
+
+server:
+  port: ${PORT:8080}
