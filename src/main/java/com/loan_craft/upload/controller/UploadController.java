@@ -50,4 +50,9 @@ public class UploadController {
                 .body(new ApiGenericResponse<>(true, "Application submitted", null, res));
     }
 
+    @GetMapping(value = "health")
+    public String healthApi(){
+        return "Working";
+    }
+
 }
