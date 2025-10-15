@@ -19,6 +19,7 @@ public class CloudinaryUpload {
 
     public String uploadPancard(MultipartFile pancardFile){
         try {
+            System.out.println("cloud pan upload entered");
             Map params = ObjectUtils.asMap(
                     "use_filename", true,
                     "unique_filename", true,
@@ -26,12 +27,17 @@ public class CloudinaryUpload {
                     "resource_type", "raw",
                     "folder", "loanCraft/pancard"
             );
+            System.out.println("create cloud pan file");
             File convFile = File.createTempFile("upload-", ".pdf");
+            System.out.println("could pan tranfer");
             pancardFile.transferTo(convFile);
+            System.out.println("cloudn pan upoad end");
             Map uploadRes = cloudinary.uploader().upload(convFile, params);
+            System.out.println("cloud pan upload finish");
             return (String) uploadRes.get("secure_url");
         }
         catch(Exception e){
+            System.out.println("catch upload error pan");
             System.out.println(e.getMessage());
             return null;
         }

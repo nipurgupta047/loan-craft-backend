@@ -34,9 +34,11 @@ public class UploadController {
         byte[] salarySlipBytes = salarySlip.getBytes();
         ObjectMapper mapper = new ObjectMapper();
         LoanApplicationReq loanApplicationReq = mapper.readValue(loanApplicationReqStr, LoanApplicationReq.class);
-
+        System.out.println("entered api - upload");
+        System.out.println("calling apply service");
         long applicationId = loanApplicationService.applicationApply(loanApplicationReq,
                 pancard, salarySlip, pancardBytes, salarySlipBytes);
+        System.out.println("returned apply service");
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiGenericResponse<>(true, "Application submitted", null, applicationId));
     }
