@@ -50,7 +50,6 @@ public class LoanApplicationService {
 
     public long applicationApply(LoanApplicationReq loanApplicationReq, MultipartFile pancard, MultipartFile salarySlip, byte[] pancardBytes, byte[] salarySlipBytes) {
         try {
-            System.out.println("entered apply service");
             Applications newApplication = new Applications(
                     loanApplicationReq.getFirstName(),
                     loanApplicationReq.getLastName(),
@@ -64,19 +63,12 @@ public class LoanApplicationService {
                     loanApplicationReq.getLoanAmount(),
                     loanApplicationReq.getLoanInterest(),
                     loanApplicationReq.getLoanTenureMonths());
-            System.out.println("calling app save");
             Applications savedApplication = applicationsRepo.save(newApplication);
-            System.out.println("finished app save");
             Map<String, String> pancardResult = panCardExtractService.processPdf(pancard, pancardBytes);
-            System.out.println("finished pan extract");
             CloudinaryUpload cloudinaryUpload = new CloudinaryUpload();
-            System.out.println("couldinary pan uplaod");
             String pancardSecureUrl = cloudinaryUpload.uploadPancard(pancard);
-            System.out.println("cloudinary pan upload finsihed");
             PancardDocument pancardUpload = new PancardDocument(savedApplication.getId(), pancardResult.get("panNumber"), pancardResult.get("name"), pancardResult.get("dateOfBirth"), pancardSecureUrl);
-            System.out.println("save pan card doc");
             pancardDocumentRepo.save(pancardUpload);
-            System.out.println("save pan card doc finished");
             Map<String, String> salarySlipResult = salarySlipExtractService.processPdf(salarySlip, salarySlipBytes);
             String salarySlipSecureUrl = cloudinaryUpload.uploadSalarySlip(salarySlip);
             SalarySlipDocument salarySlipUpload = new SalarySlipDocument(savedApplication.getId(), salarySlipResult.get("name"), formatSalary(salarySlipResult.get("salary")), salarySlipSecureUrl);
@@ -103,7 +95,6 @@ public class LoanApplicationService {
                 throw new CustomException("Application validation process failed. Please try again!");
         }
         catch(Exception e){
-            System.out.println("failled application service");
             System.out.println(e.getMessage());
             throw new CustomException("Pan extract service failed" );
         }

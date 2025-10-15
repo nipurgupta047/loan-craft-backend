@@ -13,7 +13,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")       // allow CORS on all endpoints
-                        .allowedOrigins("http://localhost:5173") // your frontend URL
+                        .allowedOrigins("https://loan-craft.netlify.app") // your frontend URL
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
