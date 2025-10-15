@@ -10,11 +10,18 @@ import java.util.Map;
 public class CloudinaryUpload {
 
     private Cloudinary cloudinary;
-    private Dotenv dotenv;
 
     public CloudinaryUpload() {
-        this.dotenv = Dotenv.load();
-        this.cloudinary = new Cloudinary(dotenv.get("CLOUDINARY_URL"));;
+        String cloudinaryUrl = System.getenv("CLOUDINARY_URL");
+        if (cloudinaryUrl == null) {
+            cloudinaryUrl = Dotenv.load().get("CLOUDINARY_URL");
+        }
+
+        if (cloudinaryUrl == null) {
+            throw new RuntimeException("CLOUDINARY_URL not set!");
+        }
+
+        this.cloudinary = new Cloudinary(cloudinaryUrl);
     }
 
     public String uploadPancard(MultipartFile pancardFile){
